@@ -54,6 +54,7 @@ class Wallet extends React.Component {
       });
       return total.toFixed(2);
     }
+    return 0;
   };
 
   handleChangeInputs = ({ target: { name, value } }) => {
