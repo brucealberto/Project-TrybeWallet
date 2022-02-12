@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import './Wallet.css';
 import { fetchMoedasApi, getExpenses } from '../actions';
 
 class Wallet extends React.Component {
@@ -85,7 +86,7 @@ class Wallet extends React.Component {
   };
 
   render() {
-    const { userLogin } = this.props;
+    const { userLogin, readExpenses } = this.props;
     const { value, description, currency, method, tag, ratesOption } = this.state;
     return (
       <div>
@@ -185,6 +186,23 @@ class Wallet extends React.Component {
             <th>Moeda de conversão</th>
             <th>Editar/Excluir</th>
           </tr>
+          {readExpenses.map((exp) => (
+            <tr key={ exp.id }>
+              <td>{exp.description}</td>
+              <td>{exp.tag}</td>
+              <td>{exp.method}</td>
+              <td>{Number(exp.value).toFixed(2)}</td>
+              <td>{exp.exchangeRates[exp.currency].name}</td>
+              <td>{Number(exp.exchangeRates[exp.currency].ask).toFixed(2)}</td>
+              <td>
+                {Number(
+                  exp.value * exp.exchangeRates[exp.currency].ask,
+                ).toFixed(2)}
+              </td>
+              <td>Real</td>
+              <td>Editar/Excluir</td>
+            </tr>
+          ))}
         </table>
       </div>
     );
